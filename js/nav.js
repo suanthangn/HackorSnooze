@@ -37,9 +37,9 @@ function updateNavOnLogin() {
 
 /** Show title, author, url to add a new story when submit is clicked */
 
-function addNewStoryOnSubmit() {
-  console.debug("addNewStoryOnSubmit", evt);
+function addNewStoryOnSubmit(e) {
+  console.debug("addNewStoryOnSubmit", e);
   hidePageComponents();
   $submitForm.show();
 }
-$addNewStory.on("click", addNewStoryOnSubmit);
+$navSubmitStory.on("click", addNewStoryOnSubmit);
