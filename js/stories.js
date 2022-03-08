@@ -58,9 +58,9 @@ async function submitNewStory(evt) {
   evt.preventDefault();
 
   // grab all info from form
-  const title = $("#create-title").val();
-  const url = $("#create-url").val();
-  const author = $("#create-author").val();
+  const title = $("#story-title").val();
+  const url = $("#story-url").val();
+  const author = $("#story-author").val();
   const username = currentUser.username
   const storyData = {title, url, author, username };
 

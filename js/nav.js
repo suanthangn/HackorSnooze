@@ -41,5 +41,6 @@ function addNewStoryOnSubmit(e) {
   console.debug("addNewStoryOnSubmit", e);
   hidePageComponents();
   $submitForm.show();
+  $allStoriesList.show();
 }
 $navSubmitStory.on("click", addNewStoryOnSubmit);
