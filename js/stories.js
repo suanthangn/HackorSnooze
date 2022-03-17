@@ -21,10 +21,11 @@ async function getAndShowStoriesOnStart() {
 
 function generateStoryMarkup(story) {
   // console.debug("generateStoryMarkup", story);
-
+  const starFav = Boolean(currentUser);
   const hostName = story.getHostName();
   return $(`
       <li id="${story.storyId}">
+        ${starFav ? getStarFav(story,currentUser) : "" }
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
@@ -33,6 +34,15 @@ function generateStoryMarkup(story) {
         <small class="story-user">posted by ${story.username}</small>
       </li>
     `);
+}
+
+/**Makes star for fav stories by user */
+function getStarFav(story, user){
+  const isFavorite = user.isFavorite(story);
+  const starType = isFavorite ? "fa-solid":"fa-regular";
+  return `
+      <i class="${starType} fa-star"></i>
+      `;
 }
 
 /** Gets list of stories from server, generates their HTML, and puts on page. */
