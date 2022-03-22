@@ -217,6 +217,29 @@ class User {
       return null;
     }
   }
+/** Add favorite story to user favs and update API */
+  async addFavorite(story){
+    this.favorites.push(story);
+    await this.addOrRemoveFavorites("add",story);
+  }
+/** Remove a story */
+
+  async removeFavorite(story){
+    this.favorites = this.favorites.filter( s => s.storyId !== story.storyId);
+    await this.addOrRemoveFavorites("remove",story);
+  }
+
+/** update API with fav or not-fav */
+
+  async addOrRemoveFavorites(newState, story){
+    const method = newState === "add" ? "POST" :"DELETE";
+    const token = this.loginToken;
+    await axios({
+      url: `${BASE_URl}/users/${this.username}/favorites/${story.storyId}`,
+      method: method,
+      data: { token },
+    });
+  }
 
   isFavorite(story) {
     return this.favorites.some(s => (s.storyId === story.storyId));

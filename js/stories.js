@@ -21,8 +21,9 @@ async function getAndShowStoriesOnStart() {
 
 function generateStoryMarkup(story) {
   // console.debug("generateStoryMarkup", story);
-  const starFav = Boolean(currentUser);
   const hostName = story.getHostName();
+  const starFav = Boolean(currentUser);
+
   return $(`
       <li id="${story.storyId}">
         ${starFav ? getStarFav(story,currentUser) : "" }
@@ -85,3 +86,46 @@ async function submitNewStory(evt) {
 }
 
 $submitForm.on("submit", submitNewStory);
+
+
+/** Put favorites list on page. */
+
+function putFavoritesListOnPage() {
+  console.debug("putFavoritesListOnPage");
+
+  $favoritedStories.empty();
+
+  if (currentUser.favorites.length === 0) {
+    $favoritedStories.append("<h5>No favorites added!</h5>");
+  } else {
+    // loop through all of users favorites and generate HTML for them
+    for (let story of currentUser.favorites) {
+      const $story = generateStoryMarkup(story);
+      $favoritedStories.append($story);
+    }
+  }
+
+  $favoritedStories.show();
+}
+
+
+/**and user starring and un-starring a story */
+
+async function toggleStoryFavorite(evt){
+  console.debug("toggleStoryFavorite");
+  const $tgt = $(evt.target);
+  const $closestLi = $tgt.closest("li");
+  const storyId = $closestLi.attr("id");
+  const story = storyList.stories.find(s => s.storyId === storyId);
+
+  if ($tgt.hasClass("fa-solid")) {
+    await currentUser.removeFavorite(story);
+    $tgt.closest("i").toggleClass("fa-solid fa-regular");
+  } else {
+    await currentUser.addFavorite(story);
+    $tgt.closest("i").toggleClass("fa-solid fa-regular");
+  }
+}
+
+$storiesLists.on("click",".star", toggleStoryFavorite);
+
