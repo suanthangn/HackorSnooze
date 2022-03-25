@@ -235,7 +235,7 @@ class User {
     const method = newState === "add" ? "POST" :"DELETE";
     const token = this.loginToken;
     await axios({
-      url: `${BASE_URl}/users/${this.username}/favorites/${story.storyId}`,
+      url: `${BASE_URL}/users/${this.username}/favorites/${story.storyId}`,
       method: method,
       data: { token },
     });
