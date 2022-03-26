@@ -19,13 +19,14 @@ async function getAndShowStoriesOnStart() {
  * Returns the markup for the story.
  */
 
-function generateStoryMarkup(story) {
+function generateStoryMarkup(story, showDeleteBtn = false) {
   // console.debug("generateStoryMarkup", story);
   const hostName = story.getHostName();
   const starFav = Boolean(currentUser);
 
   return $(`
       <li id="${story.storyId}">
+        ${showDeleteBtn ? getDeleteBtnHTML() : ""}
         ${starFav ? getStarFav(story,currentUser) : "" }
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
@@ -35,6 +36,13 @@ function generateStoryMarkup(story) {
         <small class="story-user">posted by ${story.username}</small>
       </li>
     `);
+}
+
+/**makes delete button for user story */
+function getDeleteBtnHTML() {
+  return `
+      <i class="fa-regular fa-trash-can"></i>
+      `;
 }
 
 /**Makes star for fav stories by user */
@@ -62,6 +70,21 @@ function putStoriesOnPage() {
   $allStoriesList.show();
 }
 
+/**Handles deleting user stories */
+async function deleteStory(evt){
+  console.debug("deleteStory");
+
+  const $closestLi = $(evt.target).closest("li");
+  const storyId = $closestLi.attr("id");
+
+  await storyList.removeStory(currentUser, storyId);
+
+  // re-generate story list
+  await putUserStoriesOnPage();
+}
+
+$ownStories.on("click", ".fa-trash-can", deleteStory);
+
 /** Handle submitting new story form. */
 
 async function submitNewStory(evt) {
@@ -87,6 +110,24 @@ async function submitNewStory(evt) {
 
 $submitForm.on("submit", submitNewStory);
 
+/**Put User stories on page */
+function putUserStoriesOnPage() {
+  console.debug("putUserStoriesOnPage");
+
+  $ownStories.empty();
+
+  if (currentUser.ownStories.length === 0) {
+    $ownStories.append("<h5>No stories added by user yet!</h5>");
+  } else {
+    // loop through all of users stories and generate HTML for them
+    for (let story of currentUser.ownStories) {
+      let $story = generateStoryMarkup(story, true);
+      $ownStories.append($story);
+    }
+  }
+
+  $ownStories.show();
+}
 
 /** Put favorites list on page. */
 

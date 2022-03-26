@@ -37,7 +37,7 @@ function updateNavOnLogin() {
 
 /** Show title, author, url to add a new story when submit is clicked */
 
-function addNewStoryOnSubmit(e) {
+function addNewStoryOnSubmit(evt) {
   console.debug("addNewStoryOnSubmit", evt);
   hidePageComponents();
   $submitForm.show();
@@ -54,3 +54,12 @@ function navFavoritesOnClick(evt){
 }
 $body.on("click", "#nav-favorites", navFavoritesOnClick);
 
+/**Show user stories */
+
+function navUserStoriesOnClick(evt){
+  console.debug("navUserStoriesOnClick", evt);
+  hidePageComponents();
+  putUserStoriesOnPage();
+  $ownStories.show();
+}
+$body.on("click", navUserStoriesOnClick)

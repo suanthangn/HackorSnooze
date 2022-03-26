@@ -13,6 +13,7 @@ const $storiesLists = $(".stories-list");
 const $loginForm = $("#login-form");
 const $signupForm = $("#signup-form");
 const $submitForm = $("#submit-form");
+const $ownStories = $("#nav-my-stories");
 
 const $navLogin = $("#nav-login");
 const $navUserProfile = $("#nav-user-profile");
