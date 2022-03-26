@@ -38,9 +38,19 @@ function updateNavOnLogin() {
 /** Show title, author, url to add a new story when submit is clicked */
 
 function addNewStoryOnSubmit(e) {
-  console.debug("addNewStoryOnSubmit", e);
+  console.debug("addNewStoryOnSubmit", evt);
   hidePageComponents();
   $submitForm.show();
   $allStoriesList.show();
 }
 $navSubmitStory.on("click", addNewStoryOnSubmit);
+
+/**Show fav stories list  */
+
+function navFavoritesOnClick(evt){
+  console.debug("navFavoritesOnClick", evt);
+  hidePageComponents();
+  putFavoritesListOnPage();
+}
+$body.on("click", "#nav-favorites", navFavoritesOnClick);
+
