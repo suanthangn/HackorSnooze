@@ -117,7 +117,7 @@ function putUserStoriesOnPage() {
   $ownStories.empty();
 
   if (currentUser.ownStories.length === 0) {
-    $ownStories.append("<h5>No stories added by user yet!</h5>");
+    $allStoriesList.append("<h5>No stories added by user yet!</h5>");
   } else {
     // loop through all of users stories and generate HTML for them
     for (let story of currentUser.ownStories) {

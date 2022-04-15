@@ -62,4 +62,4 @@ function navUserStoriesOnClick(evt){
   putUserStoriesOnPage();
   $ownStories.show();
 }
-$body.on("click", navUserStoriesOnClick)
+$body.on("click", "#nav-my-stories", navUserStoriesOnClick)
